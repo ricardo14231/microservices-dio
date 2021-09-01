@@ -6,4 +6,4 @@ spring:
     config:
       server:
         git:
-          uri: git@github.com:ricardo14231/microservices-dio.git server-configuration-files
+          uri: git@github.com:ricardo14231/microservices-dio.git
