@@ -1,10 +1,12 @@
 package com.dio.microservices.shoppingcard.shoppingcard.service;
 
+import com.dio.microservices.shoppingcard.shoppingcard.Exception.ElementNotFoundException;
 import com.dio.microservices.shoppingcard.shoppingcard.dto.CartDTO;
 import com.dio.microservices.shoppingcard.shoppingcard.model.CartModel;
 import com.dio.microservices.shoppingcard.shoppingcard.model.ItemModel;
 import com.dio.microservices.shoppingcard.shoppingcard.repository.CartRepository;
 import com.dio.microservices.shoppingcard.shoppingcard.utils.CartMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,34 +14,39 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class CartService {
 
-    @Autowired
-    private CartRepository cartRepository;
+    private final CartRepository cartRepository;
 
     public CartDTO addCart(CartDTO cartDTO) {
-        Optional<CartModel> findCart = cartRepository.findById(cartDTO.getId());
-        CartModel cartToSave = CartMapper.toModel(cartDTO);
+        CartModel newCart = CartMapper.toModel(cartDTO);
 
-        if(findCart.isPresent()) {
-            List<ItemModel> newItems = findCart.get().getItems();
-            newItems.addAll(cartToSave.getItems());
-            cartToSave.setItems(newItems);
+        Optional<CartModel> cartSaved = cartRepository.findById(cartDTO.getId());
+
+        if(cartSaved.isPresent()) {
+            List<ItemModel> itemsSaved = cartSaved.get().getItems();
+            newCart.getItems().addAll(itemsSaved);
         }
 
-        CartDTO cartSaved = CartMapper.toDTO(cartRepository.save(cartToSave));
-        return cartSaved;
+        return CartMapper.toDTO(cartRepository.save(newCart));
     }
 
     public CartDTO findByIdCart(Long id) {
-        CartModel cart = cartRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException());
+        CartModel cart = verifyIfExists(id);
 
         return CartMapper.toDTO(cart);
     }
 
     public String deleteCart(Long id) {
-        cartRepository.deleteById(id);
+        CartModel cartToDelete = verifyIfExists(id);
+
+        cartRepository.delete(cartToDelete);
         return String.format("Cart com ID: %o deletado!", id);
+    }
+
+    private CartModel verifyIfExists(Long id) {
+        return cartRepository.findById(id)
+                .orElseThrow(() -> new ElementNotFoundException(id));
     }
 }

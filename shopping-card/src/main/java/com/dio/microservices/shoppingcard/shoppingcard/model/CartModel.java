@@ -1,9 +1,6 @@
 package com.dio.microservices.shoppingcard.shoppingcard.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 
@@ -12,6 +9,8 @@ import java.util.List;
 @RedisHash("cart")
 @Getter
 @Setter
+@Builder
+@EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
 public class CartModel {

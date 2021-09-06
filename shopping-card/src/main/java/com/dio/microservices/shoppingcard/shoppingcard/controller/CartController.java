@@ -2,6 +2,7 @@ package com.dio.microservices.shoppingcard.shoppingcard.controller;
 
 import com.dio.microservices.shoppingcard.shoppingcard.dto.CartDTO;
 import com.dio.microservices.shoppingcard.shoppingcard.service.CartService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,10 +10,10 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/cart")
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class CartController {
 
-    @Autowired
-    private CartService cartService;
+    private final CartService cartService;
 
     @PostMapping
     public ResponseEntity<CartDTO> createCart(@RequestBody CartDTO cartDTO) {

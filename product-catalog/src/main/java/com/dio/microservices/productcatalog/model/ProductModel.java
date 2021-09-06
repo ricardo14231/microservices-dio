@@ -8,6 +8,7 @@ import org.springframework.data.elasticsearch.annotations.Document;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Document(indexName = "product")
 public class ProductModel {
 
