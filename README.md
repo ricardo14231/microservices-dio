@@ -18,12 +18,12 @@ ElasticSearch.
 
 ## Para executar a aplicação:
 
-No diretório de cada microsserviço, abra o terminal e execute o comando `mvn spring-boot:run` na seguinte sequência de diretórios:
-`config-server   
-server-discovery   
-gateway   
-product-catalog   
-shopping-cart`   
+No diretório de cada microsserviço, abra o terminal e execute o comando `mvn spring-boot:run` na seguinte sequência de diretórios:   
+`config-server`   
+`server-discovery`    
+`gateway`   
+`product-catalog`   
+`shopping-cart`   
 
 ## Endpoints:
 
@@ -34,7 +34,7 @@ GET   | http://localhost:8080/product/{id}
 POST  | http://localhost:8080/cart
 GET   | http://localhost:8080/cart/{id}
 
-## Modelo Json para criar um produto e o carrinho de compras:
+## Modelo Json para criar um produto e adicioná-lo ao carrinho de compras:
 Para adicionar um produto, envie uma requisição, método POST, para o endpoint http://localhost:8080/product com o modelo a seguir:
 ``` JSON
 {
@@ -47,7 +47,8 @@ Para adicionar o produto no carrinho, envie uma requisição, método POST, para
 ``` JSON
 {
 	"id": 1,
-	"items": [{
+	"items": 
+	[{
 		"idProduct": 1,
 		"amount": 2
 	}]
