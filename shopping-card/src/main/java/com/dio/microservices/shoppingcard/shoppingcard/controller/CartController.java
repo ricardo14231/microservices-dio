@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/cart")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -16,7 +18,7 @@ public class CartController {
     private final CartService cartService;
 
     @PostMapping
-    public ResponseEntity<CartDTO> createCart(@RequestBody CartDTO cartDTO) {
+    public ResponseEntity<CartDTO> createCart(@RequestBody @Valid CartDTO cartDTO) {
         return new ResponseEntity<>(cartService.addCart(cartDTO), HttpStatus.OK);
     }
 

@@ -50,7 +50,7 @@ class ProductServiceTest {
     }
 
     @Test
-    @DisplayName("Returns the product whin findById.")
+    @DisplayName("Returns the product when findById.")
     void findByIdProduct_ReturnProduct_whenSuccessful() {
         ProductDTO expectedProduct = ProductMapper.toDTO(ProductBuilder.createProduct());
 
